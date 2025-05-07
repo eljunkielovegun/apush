@@ -30,20 +30,30 @@
         <div class="container">
             <section class="intro">
                 <h2>APUSH Quiz Center</h2>
-                <p>Test your knowledge of AP US History with these period-specific quizzes. Select a historical period to begin, and see how well you understand the key concepts and events.</p>
+                <p>Test your knowledge of AP US History with these period-specific quizzes. Select a historical period to begin, and see how well you understand the key concepts and events. Each quiz contains 10 questions covering important information from that period.</p>
             </section>
 
             <section class="quiz-selection">
                 <h2>Choose a Period</h2>
                 <select id="period-select" class="period-dropdown">
                     <option value="period1">Period 1: 1491–1607 – Pre-Columbian to Early Contact</option>
+                    <option value="period2">Period 2: 1607–1754 – Colonial America</option>
+                    <option value="period3">Period 3: 1754–1800 – Revolution and the New Nation</option>
+                    <option value="period4">Period 4: 1800–1848 – Expansion and Reform</option>
                     <option value="period5">Period 5: 1844–1877 – Civil War and Reconstruction</option>
-                    <!-- Add more periods as quizzes are developed -->
+                    <option value="period6">Period 6: 1865–1898 – The Gilded Age</option>
+                    <option value="period7">Period 7: 1890–1945 – Progressive Era to WWII</option>
+                    <option value="period8">Period 8: 1945–1980 – Cold War and Social Movements</option>
+                    <option value="period9">Period 9: 1980–Present – Contemporary America</option>
                 </select>
+                <button id="start-quiz" class="quiz-btn">Start Quiz</button>
             </section>
 
-            <section class="quiz-container" id="quiz-container">
-                <div id="progress" class="quiz-progress">Question 1 of 5</div>
+            <section class="quiz-container" id="quiz-container" style="display: none;">
+                <div id="quiz-header" class="quiz-header">
+                    <h2 id="period-title">Period Quiz</h2>
+                    <div id="progress" class="quiz-progress">Question 1 of 10</div>
+                </div>
                 
                 <div class="quiz-question">
                     <h3 id="question">Loading question...</h3>
@@ -61,6 +71,27 @@
                     <button id="submit-btn" class="quiz-btn" disabled>Submit</button>
                     <button id="next-btn" class="quiz-btn" style="display: none;">Next</button>
                 </div>
+            </section>
+
+            <section id="quiz-summary" class="quiz-summary" style="display: none;">
+                <h2>Quiz Results</h2>
+                <div id="score-display" class="score-display">
+                    <div class="score-circle">
+                        <span id="score-number">0</span>
+                        <span id="score-total">/10</span>
+                    </div>
+                    <p id="score-message">Keep studying to improve your score!</p>
+                </div>
+                
+                <div id="questions-review">
+                    <h3>Review Questions</h3>
+                    <div id="review-list">
+                        <!-- Question review will be inserted here -->
+                    </div>
+                </div>
+                
+                <button id="retry-btn" class="quiz-btn">Retry Quiz</button>
+                <button id="new-period-btn" class="quiz-btn">Choose Another Period</button>
             </section>
 
             <section class="quiz-tips">
