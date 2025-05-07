@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APUSH Quizzes - APUSH Study Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>APUSH Study Guide</h1>
+            <p>A comprehensive guide for AP US History</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="timelines.html">Timelines</a></li>
+                <li><a href="quiz.html" class="active">Quiz</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section class="intro">
+                <h2>APUSH Quiz Center</h2>
+                <p>Test your knowledge of AP US History with these period-specific quizzes. Select a historical period to begin, and see how well you understand the key concepts and events.</p>
+            </section>
+
+            <section class="quiz-selection">
+                <h2>Choose a Period</h2>
+                <select id="period-select" class="period-dropdown">
+                    <option value="period1">Period 1: 1491–1607 – Pre-Columbian to Early Contact</option>
+                    <option value="period5">Period 5: 1844–1877 – Civil War and Reconstruction</option>
+                    <!-- Add more periods as quizzes are developed -->
+                </select>
+            </section>
+
+            <section class="quiz-container" id="quiz-container">
+                <div id="progress" class="quiz-progress">Question 1 of 5</div>
+                
+                <div class="quiz-question">
+                    <h3 id="question">Loading question...</h3>
+                </div>
+                
+                <div id="options" class="quiz-options">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+                
+                <div id="result" class="quiz-result" style="display: none;">
+                    Correct!
+                </div>
+                
+                <div class="quiz-buttons">
+                    <button id="submit-btn" class="quiz-btn" disabled>Submit</button>
+                    <button id="next-btn" class="quiz-btn" style="display: none;">Next</button>
+                </div>
+            </section>
+
+            <section class="quiz-tips">
+                <h2>Quiz Tips</h2>
+                <ul>
+                    <li><i class="fas fa-lightbulb"></i> Read each question carefully and consider all options before selecting an answer.</li>
+                    <li><i class="fas fa-brain"></i> Focus on understanding concepts and relationships rather than memorizing isolated facts.</li>
+                    <li><i class="fas fa-check-double"></i> After completing a quiz, review any questions you missed to reinforce your learning.</li>
+                    <li><i class="fas fa-sync-alt"></i> Retake quizzes periodically to measure your progress and identify areas that need further study.</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 APUSH Study Guide | Created for educational purposes</p>
+        </div>
+    </footer>
+
+    <script src="quiz.js"></script>
+</body>
+</html>

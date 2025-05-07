@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APUSH Timelines - APUSH Study Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        .mermaid {
+            margin: 30px 0;
+            overflow: auto;
+        }
+        .timeline-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .timeline-btn {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .timeline-btn:hover, .timeline-btn.active {
+            background-color: var(--secondary-color);
+        }
+        .timeline-container-wrapper {
+            overflow-x: auto;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>APUSH Study Guide</h1>
+            <p>A comprehensive guide for AP US History</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="timelines.html" class="active">Timelines</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section class="intro">
+                <h2>APUSH Historical Timelines</h2>
+                <p>These interactive timelines help visualize the connections between key events in American history. Use these visual aids to understand the chronology and relationships between historical developments across different periods.</p>
+            </section>
+
+            <section class="timeline-explanation">
+                <h2>How to Use These Timelines</h2>
+                <p>Each timeline provides a different perspective on American history:</p>
+                <ul>
+                    <li><strong>U.S. Territorial Expansion</strong> - Shows how the United States grew from the original colonies to its current size.</li>
+                    <li><strong>Civil Rights Struggles</strong> - Traces the fight for equality from slavery through modern movements.</li>
+                    <li><strong>Reform Movements</strong> - Highlights major social and political reform efforts throughout history.</li>
+                    <li><strong>Economic Developments</strong> - Follows the evolution of the American economy from colonial mercantilism to modern capitalism.</li>
+                    <li><strong>Presidential Eras</strong> - Organizes history through presidential administrations and their key policies.</li>
+                    <li><strong>Concept Map</strong> - Shows interconnections between major historical themes and developments.</li>
+                </ul>
+                <p>Use these timelines to identify patterns across different periods and to understand cause-and-effect relationships in history.</p>
+            </section>
+
+            <section class="timeline-navigation">
+                <h2>Select a Timeline</h2>
+                <div class="timeline-selector">
+                    <button class="timeline-btn active" data-timeline="territorial-expansion">U.S. Territorial Expansion</button>
+                    <button class="timeline-btn" data-timeline="civil-rights">Civil Rights Struggles</button>
+                    <button class="timeline-btn" data-timeline="reform-movements">Reform Movements</button>
+                    <button class="timeline-btn" data-timeline="economic-developments">Economic Developments</button>
+                    <button class="timeline-btn" data-timeline="presidential-eras">Presidential Eras</button>
+                    <button class="timeline-btn" data-timeline="concept-map">Concept Map</button>
+                </div>
+            </section>
+
+            <section class="timeline-display">
+                <div id="territorial-expansion" class="timeline-container-wrapper">
+                    <h2>U.S. Territorial Expansion</h2>
+                    <div class="mermaid">
+                    timeline
+                        title U.S. Territorial Expansion
+                        section Colonial Era
+                            1607 : Jamestown Founded
+                            1620 : Plymouth Colony
+                            1664 : England Captures New Amsterdam (New York)
+                            1733 : Georgia Founded (Last of 13 Colonies)
+                        section Early Republic
+                            1783 : Treaty of Paris (Independence)
+                            1803 : Louisiana Purchase
+                            1819 : Adams-Onís Treaty (Florida)
+                        section Manifest Destiny
+                            1845 : Texas Annexation
+                            1846 : Oregon Treaty (Pacific Northwest)
+                            1848 : Mexican Cession (Treaty of Guadalupe Hidalgo)
+                            1853 : Gadsden Purchase
+                            1867 : Alaska Purchase
+                            1898 : Hawaii Annexation
+                            1898 : Spanish-American War (Puerto Rico, Philippines, Guam)
+                        section Modern Era
+                            1959 : Alaska and Hawaii Statehood
+                    </div>
+                </div>
+
+                <div id="civil-rights" class="timeline-container-wrapper" style="display: none;">
+                    <h2>Civil Rights Struggles</h2>
+                    <div class="mermaid">
+                    timeline
+                        title U.S. Civil Rights Struggles
+                        section Slavery & Emancipation
+                            1619 : First Africans arrive in Virginia
+                            1739 : Stono Rebellion
+                            1831 : Nat Turner's Rebellion
+                            1863 : Emancipation Proclamation
+                            1865 : 13th Amendment (Abolishes Slavery)
+                        section Reconstruction & Jim Crow
+                            1868 : 14th Amendment (Citizenship, Equal Protection)
+                            1870 : 15th Amendment (Voting Rights for Black Men)
+                            1877 : End of Reconstruction
+                            1896 : Plessy v. Ferguson ("Separate but Equal")
+                            1909 : NAACP Founded
+                        section Civil Rights Movement
+                            1954 : Brown v. Board of Education
+                            1955 : Montgomery Bus Boycott
+                            1957 : Little Rock Nine
+                            1963 : March on Washington
+                            1964 : Civil Rights Act
+                            1965 : Voting Rights Act
+                            1968 : Fair Housing Act
+                        section Modern Era
+                            1978 : Regents v. Bakke (Affirmative Action)
+                            2008 : Barack Obama Elected President
+                            2013 : Shelby County v. Holder (Voting Rights)
+                            2020 : George Floyd Protests
+                    </div>
+                </div>
+
+                <div id="reform-movements" class="timeline-container-wrapper" style="display: none;">
+                    <h2>Reform Movements in American History</h2>
+                    <div class="mermaid">
+                    timeline
+                        title Reform Movements in American History
+                        section Religious & Social Reform
+                            1730-1740 : First Great Awakening
+                            1800-1840 : Second Great Awakening
+                            1825 : New Harmony (Utopian Community)
+                            1830s : Temperance Movement Gains Momentum
+                            1840s : Dorothea Dix (Mental Health Reform)
+                            1848 : Seneca Falls Convention
+                        section Civil War Era Reform
+                            1830s : American Anti-Slavery Society
+                            1840s : Transcendentalism (Thoreau, Emerson)
+                            1850s : Women's Suffrage Movement Grows
+                            1851 : Maine Law (First Statewide Prohibition)
+                            1870 : 15th Amendment
+                        section Progressive Era
+                            1890s : Settlement House Movement
+                            1906 : Pure Food and Drug Act
+                            1906 : Meat Inspection Act
+                            1913 : 16th Amendment (Income Tax)
+                            1913 : 17th Amendment (Direct Election of Senators)
+                            1920 : 19th Amendment (Women's Suffrage)
+                        section Modern Movements
+                            1954-1968 : Civil Rights Movement
+                            1962 : Silent Spring (Environmental Movement)
+                            1966 : National Organization for Women Founded
+                            1969 : Stonewall Riots (LGBTQ+ Rights)
+                            1990 : Americans with Disabilities Act
+                            2015 : Obergefell v. Hodges (Same-Sex Marriage)
+                    </div>
+                </div>
+
+                <div id="economic-developments" class="timeline-container-wrapper" style="display: none;">
+                    <h2>Economic Developments in U.S. History</h2>
+                    <div class="mermaid">
+                    timeline
+                        title Economic Developments in U.S. History
+                        section Colonial & Early Republic
+                            1619 : Tobacco becomes profitable export
+                            1700s : Triangular Trade develops
+                            1791 : Hamilton's Financial Plan & First Bank
+                            1816 : Second Bank of the United States
+                            1825 : Erie Canal completed
+                        section Industrial Revolution
+                            1793 : Cotton Gin invented
+                            1830s : Factory system expands
+                            1840s : Telegraph network grows
+                            1869 : Transcontinental Railroad completed
+                            1870s : Steel industry expands (Bessemer Process)
+                            1890s : Rise of Trusts and Monopolies
+                        section Progressive Era to Great Depression
+                            1907 : Panic of 1907
+                            1913 : Federal Reserve System created
+                            1914-1918 : WWI economic boom
+                            1920s : Roaring Twenties prosperity
+                            1929 : Stock Market Crash
+                            1933-1939 : New Deal programs
+                        section Modern Economy
+                            1944 : Bretton Woods System
+                            1956 : Interstate Highway System begins
+                            1970s : Stagflation and Oil Crisis
+                            1981-1989 : Reaganomics
+                            1994 : NAFTA implemented
+                            2008 : Great Recession
+                            2020 : COVID-19 Economic Impact
+                    </div>
+                </div>
+
+                <div id="presidential-eras" class="timeline-container-wrapper" style="display: none;">
+                    <h2>Presidential Eras and Key Domestic Policies</h2>
+                    <div class="mermaid">
+                    timeline
+                        title Presidential Eras and Key Domestic Policies
+                        section Founding Period
+                            1789-1797 : Washington (Establishing Precedents)
+                            1797-1801 : Adams (Alien & Sedition Acts)
+                            1801-1809 : Jefferson (Louisiana Purchase)
+                            1809-1817 : Madison (War of 1812)
+                            1817-1825 : Monroe ("Era of Good Feelings")
+                        section Jacksonian Era
+                            1825-1829 : J.Q. Adams (American System)
+                            1829-1837 : Jackson (Indian Removal, Bank War)
+                            1837-1841 : Van Buren (Independent Treasury)
+                            1841-1845 : Tyler (States' Rights, Texas)
+                            1845-1849 : Polk (Territorial Expansion)
+                        section Civil War & Reconstruction
+                            1861-1865 : Lincoln (Emancipation Proclamation)
+                            1865-1869 : Johnson (Presidential Reconstruction)
+                            1869-1877 : Grant (Radical Reconstruction)
+                            1877-1881 : Hayes (End of Reconstruction)
+                        section Gilded Age to Progressivism
+                            1881-1885 : Arthur (Civil Service Reform)
+                            1885-1889 : Cleveland (Limited Government)
+                            1897-1901 : McKinley (Gold Standard)
+                            1901-1909 : T. Roosevelt (Square Deal)
+                            1909-1913 : Taft (Trust-Busting)
+                            1913-1921 : Wilson (New Freedom)
+                        section Modern Presidency
+                            1933-1945 : F.D. Roosevelt (New Deal)
+                            1945-1953 : Truman (Fair Deal)
+                            1953-1961 : Eisenhower (Modern Republicanism)
+                            1961-1963 : Kennedy (New Frontier)
+                            1963-1969 : Johnson (Great Society)
+                            1969-1974 : Nixon (New Federalism)
+                            1981-1989 : Reagan (Reaganomics)
+                            1993-2001 : Clinton (Third Way)
+                            2009-2017 : Obama (Affordable Care Act)
+                    </div>
+                </div>
+
+                <div id="concept-map" class="timeline-container-wrapper" style="display: none;">
+                    <h2>Concept Map: Key Themes in American History</h2>
+                    <div class="mermaid">
+                    flowchart TD
+                        A[Colonial America<br>1607-1754] --> B[Revolution & Nation Building<br>1754-1800]
+                        A --> C[Slavery & Race Relations]
+                        
+                        B --> D[Westward Expansion<br>1800-1848]
+                        B --> E[Constitutional Development]
+                        
+                        D --> F[Sectional Conflict<br>1844-1877]
+                        C --> F
+                        
+                        F --> G[Industrialization<br>1865-1898]
+                        G --> H[Progressive Era<br>1890-1920]
+                        
+                        H --> I[Great Depression & New Deal<br>1929-1941]
+                        H --> J[American Foreign Policy]
+                        
+                        I --> K[Post-War America<br>1945-1980]
+                        J --> K
+                        
+                        K --> L[Civil Rights Movements]
+                        L --> M[Contemporary America<br>1980-Present]
+                        
+                        N[Economic Development] --> A
+                        N --> G
+                        N --> I
+                        N --> M
+                        
+                        O[Immigration & Demographic Change] --> A
+                        O --> G
+                        O --> H
+                        O --> M
+                        
+                        P[Reform Movements] --> H
+                        P --> L
+                        
+                        Q[Technological Change] --> G
+                        Q --> K
+                        Q --> M
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 APUSH Study Guide | Created for educational purposes</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Mermaid for timeline rendering
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Mermaid
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose',
+                flowchart: {
+                    useMaxWidth: false,
+                    htmlLabels: true
+                },
+                timeline: {
+                    useMaxWidth: false,
+                    // Customize timeline colors to match site theme
+                    noteMargin: 10,
+                    width: '100%',
+                    height: 'auto'
+                }
+            });
+            
+            // Timeline navigation
+            const timelineButtons = document.querySelectorAll('.timeline-btn');
+            
+            if (timelineButtons.length > 0) {
+                // Add click event to timeline buttons
+                timelineButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        timelineButtons.forEach(btn => btn.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // Hide all timeline containers
+                        document.querySelectorAll('.timeline-container-wrapper').forEach(container => {
+                            container.style.display = 'none';
+                        });
+                        
+                        // Show selected timeline container
+                        const timelineId = this.getAttribute('data-timeline');
+                        document.getElementById(timelineId).style.display = 'block';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
