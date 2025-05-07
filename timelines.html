@@ -6,19 +6,106 @@
     <title>APUSH Timelines - APUSH Study Guide</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
-        .mermaid {
-            margin: 30px 0;
-            overflow: auto;
+        /* Simple Timeline Styles */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
         }
-        .timeline-selector {
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -13px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -13px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            position: relative;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .timeline-title {
+            margin: 5px 0;
+            color: var(--dark-color);
+        }
+        
+        .timeline-text {
+            margin-top: 5px;
+        }
+        
+        .timeline-section {
+            margin: 60px 0 40px 0;
+            padding: 10px 0;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            position: relative;
+            z-index: 1;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        /* Timeline Tab Navigation */
+        .tab-navigation {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
             flex-wrap: wrap;
+            margin-bottom: 30px;
         }
-        .timeline-btn {
+        
+        .tab-btn {
             padding: 10px 15px;
             margin: 5px;
             background-color: var(--primary-color);
@@ -27,13 +114,101 @@
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-weight: 600;
         }
-        .timeline-btn:hover, .timeline-btn.active {
+        
+        .tab-btn:hover, .tab-btn.active {
             background-color: var(--secondary-color);
         }
-        .timeline-container-wrapper {
-            overflow-x: auto;
-            margin-bottom: 50px;
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Concept Map Styling */
+        .concept-map {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .concept-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        
+        .concept-node {
+            background-color: var(--accent-color);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 10px 15px;
+            margin: 5px 10px;
+            text-align: center;
+            max-width: 250px;
+            position: relative;
+        }
+        
+        .concept-node::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background-color: var(--primary-color);
+            left: 50%;
+            bottom: -20px;
+            z-index: 0;
+        }
+        
+        .concept-node.end-node::after {
+            display: none;
+        }
+        
+        .concept-arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid var(--primary-color);
+            margin: 0 auto 10px;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:nth-child(odd) {
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 15px;
+                right: auto;
+            }
         }
     </style>
 </head>
@@ -77,236 +252,1088 @@
                 <p>Use these timelines to identify patterns across different periods and to understand cause-and-effect relationships in history.</p>
             </section>
 
-            <section class="timeline-navigation">
-                <h2>Select a Timeline</h2>
-                <div class="timeline-selector">
-                    <button class="timeline-btn active" data-timeline="territorial-expansion">U.S. Territorial Expansion</button>
-                    <button class="timeline-btn" data-timeline="civil-rights">Civil Rights Struggles</button>
-                    <button class="timeline-btn" data-timeline="reform-movements">Reform Movements</button>
-                    <button class="timeline-btn" data-timeline="economic-developments">Economic Developments</button>
-                    <button class="timeline-btn" data-timeline="presidential-eras">Presidential Eras</button>
-                    <button class="timeline-btn" data-timeline="concept-map">Concept Map</button>
-                </div>
-            </section>
+            <div class="tab-navigation">
+                <button class="tab-btn active" data-tab="territorial">U.S. Territorial Expansion</button>
+                <button class="tab-btn" data-tab="civil-rights">Civil Rights Struggles</button>
+                <button class="tab-btn" data-tab="reform">Reform Movements</button>
+                <button class="tab-btn" data-tab="economic">Economic Developments</button>
+                <button class="tab-btn" data-tab="presidential">Presidential Eras</button>
+                <button class="tab-btn" data-tab="concept-map">Concept Map</button>
+            </div>
 
-            <section class="timeline-display">
-                <div id="territorial-expansion" class="timeline-container-wrapper">
-                    <h2>U.S. Territorial Expansion</h2>
-                    <div class="mermaid">
-                    timeline
-                        title U.S. Territorial Expansion
-                        section Colonial Era
-                            1607 : Jamestown Founded
-                            1620 : Plymouth Colony
-                            1664 : England Captures New Amsterdam (New York)
-                            1733 : Georgia Founded (Last of 13 Colonies)
-                        section Early Republic
-                            1783 : Treaty of Paris (Independence)
-                            1803 : Louisiana Purchase
-                            1819 : Adams-Onís Treaty (Florida)
-                        section Manifest Destiny
-                            1845 : Texas Annexation
-                            1846 : Oregon Treaty (Pacific Northwest)
-                            1848 : Mexican Cession (Treaty of Guadalupe Hidalgo)
-                            1853 : Gadsden Purchase
-                            1867 : Alaska Purchase
-                            1898 : Hawaii Annexation
-                            1898 : Spanish-American War (Puerto Rico, Philippines, Guam)
-                        section Modern Era
-                            1959 : Alaska and Hawaii Statehood
+            <!-- U.S. Territorial Expansion Timeline -->
+            <div id="territorial" class="tab-content active">
+                <h2>U.S. Territorial Expansion</h2>
+                <div class="timeline">
+                    <div class="timeline-section">Colonial Era</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1607</div>
+                            <h3 class="timeline-title">Jamestown Founded</h3>
+                            <p class="timeline-text">First permanent English settlement in North America</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1620</div>
+                            <h3 class="timeline-title">Plymouth Colony</h3>
+                            <p class="timeline-text">Pilgrims establish settlement in Massachusetts</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1664</div>
+                            <h3 class="timeline-title">England Captures New Amsterdam</h3>
+                            <p class="timeline-text">Dutch colony renamed New York</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1733</div>
+                            <h3 class="timeline-title">Georgia Founded</h3>
+                            <p class="timeline-text">Last of the original 13 colonies established</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Early Republic</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1783</div>
+                            <h3 class="timeline-title">Treaty of Paris</h3>
+                            <p class="timeline-text">Established independence and initial U.S. boundaries</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1803</div>
+                            <h3 class="timeline-title">Louisiana Purchase</h3>
+                            <p class="timeline-text">Doubled the size of the United States</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1819</div>
+                            <h3 class="timeline-title">Adams-Onís Treaty</h3>
+                            <p class="timeline-text">Spain ceded Florida to the United States</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Manifest Destiny</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1845</div>
+                            <h3 class="timeline-title">Texas Annexation</h3>
+                            <p class="timeline-text">Republic of Texas joined the United States</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1846</div>
+                            <h3 class="timeline-title">Oregon Treaty</h3>
+                            <p class="timeline-text">Set the northwestern border at the 49th parallel</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1848</div>
+                            <h3 class="timeline-title">Mexican Cession</h3>
+                            <p class="timeline-text">Treaty of Guadalupe Hidalgo added California and Southwest</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1853</div>
+                            <h3 class="timeline-title">Gadsden Purchase</h3>
+                            <p class="timeline-text">Acquired southern Arizona and New Mexico from Mexico</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1867</div>
+                            <h3 class="timeline-title">Alaska Purchase</h3>
+                            <p class="timeline-text">"Seward's Folly" acquired territory from Russia</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1898</div>
+                            <h3 class="timeline-title">Hawaii Annexation</h3>
+                            <p class="timeline-text">Former kingdom becomes U.S. territory</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Modern Era</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1959</div>
+                            <h3 class="timeline-title">Alaska and Hawaii Statehood</h3>
+                            <p class="timeline-text">Completes the current 50-state Union</p>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="civil-rights" class="timeline-container-wrapper" style="display: none;">
-                    <h2>Civil Rights Struggles</h2>
-                    <div class="mermaid">
-                    timeline
-                        title U.S. Civil Rights Struggles
-                        section Slavery & Emancipation
-                            1619 : First Africans arrive in Virginia
-                            1739 : Stono Rebellion
-                            1831 : Nat Turner's Rebellion
-                            1863 : Emancipation Proclamation
-                            1865 : 13th Amendment (Abolishes Slavery)
-                        section Reconstruction & Jim Crow
-                            1868 : 14th Amendment (Citizenship, Equal Protection)
-                            1870 : 15th Amendment (Voting Rights for Black Men)
-                            1877 : End of Reconstruction
-                            1896 : Plessy v. Ferguson ("Separate but Equal")
-                            1909 : NAACP Founded
-                        section Civil Rights Movement
-                            1954 : Brown v. Board of Education
-                            1955 : Montgomery Bus Boycott
-                            1957 : Little Rock Nine
-                            1963 : March on Washington
-                            1964 : Civil Rights Act
-                            1965 : Voting Rights Act
-                            1968 : Fair Housing Act
-                        section Modern Era
-                            1978 : Regents v. Bakke (Affirmative Action)
-                            2008 : Barack Obama Elected President
-                            2013 : Shelby County v. Holder (Voting Rights)
-                            2020 : George Floyd Protests
+            <!-- Civil Rights Struggles Timeline -->
+            <div id="civil-rights" class="tab-content">
+                <h2>Civil Rights Struggles</h2>
+                <div class="timeline">
+                    <div class="timeline-section">Slavery & Emancipation</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1619</div>
+                            <h3 class="timeline-title">First Africans arrive in Virginia</h3>
+                            <p class="timeline-text">Beginning of African presence in English colonies</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1739</div>
+                            <h3 class="timeline-title">Stono Rebellion</h3>
+                            <p class="timeline-text">Largest slave uprising in colonial America</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1831</div>
+                            <h3 class="timeline-title">Nat Turner's Rebellion</h3>
+                            <p class="timeline-text">Slave revolt in Virginia led to stricter slave codes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1863</div>
+                            <h3 class="timeline-title">Emancipation Proclamation</h3>
+                            <p class="timeline-text">Lincoln frees slaves in Confederate states</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1865</div>
+                            <h3 class="timeline-title">13th Amendment</h3>
+                            <p class="timeline-text">Abolishes slavery throughout the United States</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Reconstruction & Jim Crow</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1868</div>
+                            <h3 class="timeline-title">14th Amendment</h3>
+                            <p class="timeline-text">Guarantees citizenship and equal protection</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1870</div>
+                            <h3 class="timeline-title">15th Amendment</h3>
+                            <p class="timeline-text">Prohibits denial of voting rights based on race</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1877</div>
+                            <h3 class="timeline-title">End of Reconstruction</h3>
+                            <p class="timeline-text">Federal troops withdrawn from South</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1896</div>
+                            <h3 class="timeline-title">Plessy v. Ferguson</h3>
+                            <p class="timeline-text">Supreme Court upholds "separate but equal" doctrine</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1909</div>
+                            <h3 class="timeline-title">NAACP Founded</h3>
+                            <p class="timeline-text">Organization established to advance civil rights</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Civil Rights Movement</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1954</div>
+                            <h3 class="timeline-title">Brown v. Board of Education</h3>
+                            <p class="timeline-text">Supreme Court outlaws segregation in public schools</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1955</div>
+                            <h3 class="timeline-title">Montgomery Bus Boycott</h3>
+                            <p class="timeline-text">Rosa Parks' arrest sparks yearlong protest</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1957</div>
+                            <h3 class="timeline-title">Little Rock Nine</h3>
+                            <p class="timeline-text">Federal troops enforce school integration in Arkansas</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1963</div>
+                            <h3 class="timeline-title">March on Washington</h3>
+                            <p class="timeline-text">Martin Luther King Jr. delivers "I Have a Dream" speech</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1964</div>
+                            <h3 class="timeline-title">Civil Rights Act</h3>
+                            <p class="timeline-text">Prohibits discrimination based on race, color, religion, sex, or national origin</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1965</div>
+                            <h3 class="timeline-title">Voting Rights Act</h3>
+                            <p class="timeline-text">Prohibits racial discrimination in voting</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1968</div>
+                            <h3 class="timeline-title">Fair Housing Act</h3>
+                            <p class="timeline-text">Prohibits discrimination in housing</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Modern Era</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1978</div>
+                            <h3 class="timeline-title">Regents v. Bakke</h3>
+                            <p class="timeline-text">Supreme Court case on affirmative action</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2008</div>
+                            <h3 class="timeline-title">Barack Obama Elected President</h3>
+                            <p class="timeline-text">First African American president</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2013</div>
+                            <h3 class="timeline-title">Shelby County v. Holder</h3>
+                            <p class="timeline-text">Supreme Court strikes down key provision of Voting Rights Act</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2020</div>
+                            <h3 class="timeline-title">George Floyd Protests</h3>
+                            <p class="timeline-text">Nationwide demonstrations against police violence</p>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="reform-movements" class="timeline-container-wrapper" style="display: none;">
-                    <h2>Reform Movements in American History</h2>
-                    <div class="mermaid">
-                    timeline
-                        title Reform Movements in American History
-                        section Religious & Social Reform
-                            1730-1740 : First Great Awakening
-                            1800-1840 : Second Great Awakening
-                            1825 : New Harmony (Utopian Community)
-                            1830s : Temperance Movement Gains Momentum
-                            1840s : Dorothea Dix (Mental Health Reform)
-                            1848 : Seneca Falls Convention
-                        section Civil War Era Reform
-                            1830s : American Anti-Slavery Society
-                            1840s : Transcendentalism (Thoreau, Emerson)
-                            1850s : Women's Suffrage Movement Grows
-                            1851 : Maine Law (First Statewide Prohibition)
-                            1870 : 15th Amendment
-                        section Progressive Era
-                            1890s : Settlement House Movement
-                            1906 : Pure Food and Drug Act
-                            1906 : Meat Inspection Act
-                            1913 : 16th Amendment (Income Tax)
-                            1913 : 17th Amendment (Direct Election of Senators)
-                            1920 : 19th Amendment (Women's Suffrage)
-                        section Modern Movements
-                            1954-1968 : Civil Rights Movement
-                            1962 : Silent Spring (Environmental Movement)
-                            1966 : National Organization for Women Founded
-                            1969 : Stonewall Riots (LGBTQ+ Rights)
-                            1990 : Americans with Disabilities Act
-                            2015 : Obergefell v. Hodges (Same-Sex Marriage)
+            <!-- Reform Movements Timeline -->
+            <div id="reform" class="tab-content">
+                <h2>Reform Movements in American History</h2>
+                <div class="timeline">
+                    <div class="timeline-section">Religious & Social Reform</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1730-1740</div>
+                            <h3 class="timeline-title">First Great Awakening</h3>
+                            <p class="timeline-text">Religious revival emphasizing personal salvation and authority of individuals</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1800-1840</div>
+                            <h3 class="timeline-title">Second Great Awakening</h3>
+                            <p class="timeline-text">Religious revival fueling social reform movements</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1825</div>
+                            <h3 class="timeline-title">New Harmony</h3>
+                            <p class="timeline-text">Utopian community founded by Robert Owen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1830s</div>
+                            <h3 class="timeline-title">Temperance Movement Gains Momentum</h3>
+                            <p class="timeline-text">Campaign against alcohol consumption grows</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1840s</div>
+                            <h3 class="timeline-title">Dorothea Dix's Mental Health Reform</h3>
+                            <p class="timeline-text">Advocacy for humane treatment of the mentally ill</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1848</div>
+                            <h3 class="timeline-title">Seneca Falls Convention</h3>
+                            <p class="timeline-text">First women's rights convention in the United States</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Civil War Era Reform</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1830s</div>
+                            <h3 class="timeline-title">American Anti-Slavery Society</h3>
+                            <p class="timeline-text">Founded by William Lloyd Garrison to advocate for immediate emancipation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1840s</div>
+                            <h3 class="timeline-title">Transcendentalism</h3>
+                            <p class="timeline-text">Philosophical movement led by Emerson and Thoreau</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1850s</div>
+                            <h3 class="timeline-title">Women's Suffrage Movement Grows</h3>
+                            <p class="timeline-text">Campaign for women's voting rights gains momentum</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1851</div>
+                            <h3 class="timeline-title">Maine Law</h3>
+                            <p class="timeline-text">First statewide prohibition legislation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Progressive Era</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1890s</div>
+                            <h3 class="timeline-title">Settlement House Movement</h3>
+                            <p class="timeline-text">Urban reform led by Jane Addams at Hull House</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1906</div>
+                            <h3 class="timeline-title">Pure Food and Drug Act</h3>
+                            <p class="timeline-text">First federal consumer protection legislation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1906</div>
+                            <h3 class="timeline-title">Meat Inspection Act</h3>
+                            <p class="timeline-text">Federal oversight of meatpacking industry</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1913</div>
+                            <h3 class="timeline-title">16th Amendment</h3>
+                            <p class="timeline-text">Established federal income tax</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1913</div>
+                            <h3 class="timeline-title">17th Amendment</h3>
+                            <p class="timeline-text">Direct election of senators</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1920</div>
+                            <h3 class="timeline-title">19th Amendment</h3>
+                            <p class="timeline-text">Women's suffrage achieved</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Modern Movements</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1954-1968</div>
+                            <h3 class="timeline-title">Civil Rights Movement</h3>
+                            <p class="timeline-text">Campaign for racial equality and justice</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1962</div>
+                            <h3 class="timeline-title">Silent Spring</h3>
+                            <p class="timeline-text">Rachel Carson's book launches environmental movement</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1966</div>
+                            <h3 class="timeline-title">National Organization for Women Founded</h3>
+                            <p class="timeline-text">Modern feminist movement begins</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1969</div>
+                            <h3 class="timeline-title">Stonewall Riots</h3>
+                            <p class="timeline-text">Catalyst for LGBTQ+ rights movement</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1990</div>
+                            <h3 class="timeline-title">Americans with Disabilities Act</h3>
+                            <p class="timeline-text">Civil rights legislation for people with disabilities</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2015</div>
+                            <h3 class="timeline-title">Obergefell v. Hodges</h3>
+                            <p class="timeline-text">Supreme Court legalizes same-sex marriage nationwide</p>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="economic-developments" class="timeline-container-wrapper" style="display: none;">
-                    <h2>Economic Developments in U.S. History</h2>
-                    <div class="mermaid">
-                    timeline
-                        title Economic Developments in U.S. History
-                        section Colonial & Early Republic
-                            1619 : Tobacco becomes profitable export
-                            1700s : Triangular Trade develops
-                            1791 : Hamilton's Financial Plan & First Bank
-                            1816 : Second Bank of the United States
-                            1825 : Erie Canal completed
-                        section Industrial Revolution
-                            1793 : Cotton Gin invented
-                            1830s : Factory system expands
-                            1840s : Telegraph network grows
-                            1869 : Transcontinental Railroad completed
-                            1870s : Steel industry expands (Bessemer Process)
-                            1890s : Rise of Trusts and Monopolies
-                        section Progressive Era to Great Depression
-                            1907 : Panic of 1907
-                            1913 : Federal Reserve System created
-                            1914-1918 : WWI economic boom
-                            1920s : Roaring Twenties prosperity
-                            1929 : Stock Market Crash
-                            1933-1939 : New Deal programs
-                        section Modern Economy
-                            1944 : Bretton Woods System
-                            1956 : Interstate Highway System begins
-                            1970s : Stagflation and Oil Crisis
-                            1981-1989 : Reaganomics
-                            1994 : NAFTA implemented
-                            2008 : Great Recession
-                            2020 : COVID-19 Economic Impact
+            <!-- Economic Developments Timeline -->
+            <div id="economic" class="tab-content">
+                <h2>Economic Developments in U.S. History</h2>
+                <div class="timeline">
+                    <div class="timeline-section">Colonial & Early Republic</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1619</div>
+                            <h3 class="timeline-title">Tobacco becomes profitable export</h3>
+                            <p class="timeline-text">Establishes plantation economy in Virginia</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1700s</div>
+                            <h3 class="timeline-title">Triangular Trade develops</h3>
+                            <p class="timeline-text">Trade pattern linking Europe, Africa, and Americas</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1791</div>
+                            <h3 class="timeline-title">Hamilton's Financial Plan</h3>
+                            <p class="timeline-text">Established national bank and assumption of state debts</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1816</div>
+                            <h3 class="timeline-title">Second Bank of the United States</h3>
+                            <p class="timeline-text">Central banking institution chartered for 20 years</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1825</div>
+                            <h3 class="timeline-title">Erie Canal completed</h3>
+                            <p class="timeline-text">Connected Great Lakes to Atlantic, revolutionizing transport</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Industrial Revolution</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1793</div>
+                            <h3 class="timeline-title">Cotton Gin invented</h3>
+                            <p class="timeline-text">Eli Whitney's invention revitalized slavery</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1830s</div>
+                            <h3 class="timeline-title">Factory system expands</h3>
+                            <p class="timeline-text">Particularly in textiles in New England</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1840s</div>
+                            <h3 class="timeline-title">Telegraph network grows</h3>
+                            <p class="timeline-text">Samuel Morse's invention revolutionizes communication</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1869</div>
+                            <h3 class="timeline-title">Transcontinental Railroad completed</h3>
+                            <p class="timeline-text">Connected East and West coasts for trade and travel</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1870s</div>
+                            <h3 class="timeline-title">Steel industry expands</h3>
+                            <p class="timeline-text">Bessemer process enables mass production</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1890s</div>
+                            <h3 class="timeline-title">Rise of Trusts and Monopolies</h3>
+                            <p class="timeline-text">Standard Oil, U.S. Steel consolidate industries</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Progressive Era to Depression</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1907</div>
+                            <h3 class="timeline-title">Panic of 1907</h3>
+                            <p class="timeline-text">Financial crisis leads to banking reform</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1913</div>
+                            <h3 class="timeline-title">Federal Reserve System created</h3>
+                            <p class="timeline-text">Established modern central banking system</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1914-1918</div>
+                            <h3 class="timeline-title">WWI economic boom</h3>
+                            <p class="timeline-text">U.S. becomes major global creditor</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1920s</div>
+                            <h3 class="timeline-title">Roaring Twenties prosperity</h3>
+                            <p class="timeline-text">Consumer economy and stock market boom</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1929</div>
+                            <h3 class="timeline-title">Stock Market Crash</h3>
+                            <p class="timeline-text">Triggered Great Depression</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1933-1939</div>
+                            <h3 class="timeline-title">New Deal programs</h3>
+                            <p class="timeline-text">Expanded federal role in economy</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Modern Economy</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1944</div>
+                            <h3 class="timeline-title">Bretton Woods System</h3>
+                            <p class="timeline-text">Established post-war international monetary system</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1956</div>
+                            <h3 class="timeline-title">Interstate Highway System begins</h3>
+                            <p class="timeline-text">Largest public works project in American history</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1970s</div>
+                            <h3 class="timeline-title">Stagflation and Oil Crisis</h3>
+                            <p class="timeline-text">Economic turmoil challenges post-war prosperity</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1981-1989</div>
+                            <h3 class="timeline-title">Reaganomics</h3>
+                            <p class="timeline-text">Supply-side economic policies and deregulation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1994</div>
+                            <h3 class="timeline-title">NAFTA implemented</h3>
+                            <p class="timeline-text">Free trade agreement with Canada and Mexico</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2008</div>
+                            <h3 class="timeline-title">Great Recession</h3>
+                            <p class="timeline-text">Financial crisis triggers global economic downturn</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2020</div>
+                            <h3 class="timeline-title">COVID-19 Economic Impact</h3>
+                            <p class="timeline-text">Pandemic disrupts global economy</p>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="presidential-eras" class="timeline-container-wrapper" style="display: none;">
-                    <h2>Presidential Eras and Key Domestic Policies</h2>
-                    <div class="mermaid">
-                    timeline
-                        title Presidential Eras and Key Domestic Policies
-                        section Founding Period
-                            1789-1797 : Washington (Establishing Precedents)
-                            1797-1801 : Adams (Alien & Sedition Acts)
-                            1801-1809 : Jefferson (Louisiana Purchase)
-                            1809-1817 : Madison (War of 1812)
-                            1817-1825 : Monroe ("Era of Good Feelings")
-                        section Jacksonian Era
-                            1825-1829 : J.Q. Adams (American System)
-                            1829-1837 : Jackson (Indian Removal, Bank War)
-                            1837-1841 : Van Buren (Independent Treasury)
-                            1841-1845 : Tyler (States' Rights, Texas)
-                            1845-1849 : Polk (Territorial Expansion)
-                        section Civil War & Reconstruction
-                            1861-1865 : Lincoln (Emancipation Proclamation)
-                            1865-1869 : Johnson (Presidential Reconstruction)
-                            1869-1877 : Grant (Radical Reconstruction)
-                            1877-1881 : Hayes (End of Reconstruction)
-                        section Gilded Age to Progressivism
-                            1881-1885 : Arthur (Civil Service Reform)
-                            1885-1889 : Cleveland (Limited Government)
-                            1897-1901 : McKinley (Gold Standard)
-                            1901-1909 : T. Roosevelt (Square Deal)
-                            1909-1913 : Taft (Trust-Busting)
-                            1913-1921 : Wilson (New Freedom)
-                        section Modern Presidency
-                            1933-1945 : F.D. Roosevelt (New Deal)
-                            1945-1953 : Truman (Fair Deal)
-                            1953-1961 : Eisenhower (Modern Republicanism)
-                            1961-1963 : Kennedy (New Frontier)
-                            1963-1969 : Johnson (Great Society)
-                            1969-1974 : Nixon (New Federalism)
-                            1981-1989 : Reagan (Reaganomics)
-                            1993-2001 : Clinton (Third Way)
-                            2009-2017 : Obama (Affordable Care Act)
+            <!-- Presidential Eras Timeline -->
+            <div id="presidential" class="tab-content">
+                <h2>Presidential Eras and Key Domestic Policies</h2>
+                <div class="timeline">
+                    <div class="timeline-section">Founding Period</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1789-1797</div>
+                            <h3 class="timeline-title">Washington (Establishing Precedents)</h3>
+                            <p class="timeline-text">Set precedent for presidential power and neutrality</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1797-1801</div>
+                            <h3 class="timeline-title">Adams (Alien & Sedition Acts)</h3>
+                            <p class="timeline-text">Restricted speech critical of government</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1801-1809</div>
+                            <h3 class="timeline-title">Jefferson (Louisiana Purchase)</h3>
+                            <p class="timeline-text">Doubled size of United States</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1809-1817</div>
+                            <h3 class="timeline-title">Madison (War of 1812)</h3>
+                            <p class="timeline-text">Second war with Britain established U.S. independence</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1817-1825</div>
+                            <h3 class="timeline-title">Monroe ("Era of Good Feelings")</h3>
+                            <p class="timeline-text">Period of national unity and one-party domination</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Jacksonian Era</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1825-1829</div>
+                            <h3 class="timeline-title">J.Q. Adams (American System)</h3>
+                            <p class="timeline-text">Promoted internal improvements and protectionist tariffs</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1829-1837</div>
+                            <h3 class="timeline-title">Jackson (Indian Removal, Bank War)</h3>
+                            <p class="timeline-text">Expanded democracy for white men, removed Native Americans</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1837-1841</div>
+                            <h3 class="timeline-title">Van Buren (Independent Treasury)</h3>
+                            <p class="timeline-text">Separated government from banking system</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1841-1845</div>
+                            <h3 class="timeline-title">Tyler (States' Rights, Texas)</h3>
+                            <p class="timeline-text">Pursued annexation of Texas</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1845-1849</div>
+                            <h3 class="timeline-title">Polk (Territorial Expansion)</h3>
+                            <p class="timeline-text">Added vast western territories through war and negotiation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Civil War & Reconstruction</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1861-1865</div>
+                            <h3 class="timeline-title">Lincoln (Emancipation Proclamation)</h3>
+                            <p class="timeline-text">Preserved Union and abolished slavery</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1865-1869</div>
+                            <h3 class="timeline-title">Johnson (Presidential Reconstruction)</h3>
+                            <p class="timeline-text">Lenient approach to former Confederate states</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1869-1877</div>
+                            <h3 class="timeline-title">Grant (Radical Reconstruction)</h3>
+                            <p class="timeline-text">Enforced civil rights for freedmen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1877-1881</div>
+                            <h3 class="timeline-title">Hayes (End of Reconstruction)</h3>
+                            <p class="timeline-text">Withdrew federal troops from South</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Gilded Age to Progressivism</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1881-1885</div>
+                            <h3 class="timeline-title">Arthur (Civil Service Reform)</h3>
+                            <p class="timeline-text">Pendleton Act established merit-based system</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1897-1901</div>
+                            <h3 class="timeline-title">McKinley (Gold Standard)</h3>
+                            <p class="timeline-text">Defeated William Jennings Bryan's "Free Silver" platform</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1901-1909</div>
+                            <h3 class="timeline-title">T. Roosevelt (Square Deal)</h3>
+                            <p class="timeline-text">Consumer protection and trust-busting</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1909-1913</div>
+                            <h3 class="timeline-title">Taft (Trust-Busting)</h3>
+                            <p class="timeline-text">Broke up more trusts than Roosevelt</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1913-1921</div>
+                            <h3 class="timeline-title">Wilson (New Freedom)</h3>
+                            <p class="timeline-text">Established Federal Reserve and supported labor</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-section">Modern Presidency</div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1933-1945</div>
+                            <h3 class="timeline-title">F.D. Roosevelt (New Deal)</h3>
+                            <p class="timeline-text">Expanded federal government to combat Depression</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1945-1953</div>
+                            <h3 class="timeline-title">Truman (Fair Deal)</h3>
+                            <p class="timeline-text">Attempted to extend New Deal reforms</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1953-1961</div>
+                            <h3 class="timeline-title">Eisenhower (Modern Republicanism)</h3>
+                            <p class="timeline-text">Built Interstate Highway System</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1961-1963</div>
+                            <h3 class="timeline-title">Kennedy (New Frontier)</h3>
+                            <p class="timeline-text">Space program and economic growth</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1963-1969</div>
+                            <h3 class="timeline-title">Johnson (Great Society)</h3>
+                            <p class="timeline-text">Civil rights legislation and War on Poverty</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1969-1974</div>
+                            <h3 class="timeline-title">Nixon (New Federalism)</h3>
+                            <p class="timeline-text">Environmental protection and China opening</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1981-1989</div>
+                            <h3 class="timeline-title">Reagan (Reaganomics)</h3>
+                            <p class="timeline-text">Tax cuts and deregulation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1993-2001</div>
+                            <h3 class="timeline-title">Clinton (Third Way)</h3>
+                            <p class="timeline-text">Welfare reform and balanced budget</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2009-2017</div>
+                            <h3 class="timeline-title">Obama (Affordable Care Act)</h3>
+                            <p class="timeline-text">Healthcare reform and economic recovery</p>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="concept-map" class="timeline-container-wrapper" style="display: none;">
-                    <h2>Concept Map: Key Themes in American History</h2>
-                    <div class="mermaid">
-                    flowchart TD
-                        A[Colonial America<br>1607-1754] --> B[Revolution & Nation Building<br>1754-1800]
-                        A --> C[Slavery & Race Relations]
+            <!-- Concept Map -->
+            <div id="concept-map" class="tab-content">
+                <h2>Concept Map: Key Themes in American History</h2>
+                
+                <div class="concept-map">
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Colonial America</h3>
+                            <p>1607-1754</p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Revolution & Nation Building</h3>
+                            <p>1754-1800</p>
+                        </div>
                         
-                        B --> D[Westward Expansion<br>1800-1848]
-                        B --> E[Constitutional Development]
+                        <div class="concept-node">
+                            <h3>Slavery & Race Relations</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Westward Expansion</h3>
+                            <p>1800-1848</p>
+                        </div>
                         
-                        D --> F[Sectional Conflict<br>1844-1877]
-                        C --> F
+                        <div class="concept-node">
+                            <h3>Constitutional Development</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Sectional Conflict</h3>
+                            <p>1844-1877</p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Industrialization</h3>
+                            <p>1865-1898</p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Progressive Era</h3>
+                            <p>1890-1920</p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Great Depression & New Deal</h3>
+                            <p>1929-1941</p>
+                        </div>
                         
-                        F --> G[Industrialization<br>1865-1898]
-                        G --> H[Progressive Era<br>1890-1920]
+                        <div class="concept-node">
+                            <h3>American Foreign Policy</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Post-War America</h3>
+                            <p>1945-1980</p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node">
+                            <h3>Civil Rights Movements</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-arrow"></div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node end-node">
+                            <h3>Contemporary America</h3>
+                            <p>1980-Present</p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-row" style="margin-top: 50px;">
+                        <div class="concept-node">
+                            <h3>Cross-Cutting Themes</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-row">
+                        <div class="concept-node end-node">
+                            <h3>Economic Development</h3>
+                        </div>
                         
-                        H --> I[Great Depression & New Deal<br>1929-1941]
-                        H --> J[American Foreign Policy]
+                        <div class="concept-node end-node">
+                            <h3>Immigration & Demographic Change</h3>
+                        </div>
                         
-                        I --> K[Post-War America<br>1945-1980]
-                        J --> K
+                        <div class="concept-node end-node">
+                            <h3>Reform Movements</h3>
+                        </div>
                         
-                        K --> L[Civil Rights Movements]
-                        L --> M[Contemporary America<br>1980-Present]
-                        
-                        N[Economic Development] --> A
-                        N --> G
-                        N --> I
-                        N --> M
-                        
-                        O[Immigration & Demographic Change] --> A
-                        O --> G
-                        O --> H
-                        O --> M
-                        
-                        P[Reform Movements] --> H
-                        P --> L
-                        
-                        Q[Technological Change] --> G
-                        Q --> K
-                        Q --> M
+                        <div class="concept-node end-node">
+                            <h3>Technological Change</h3>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     </main>
 
@@ -317,50 +1344,26 @@
     </footer>
 
     <script>
-        // Initialize Mermaid for timeline rendering
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Mermaid
-            mermaid.initialize({
-                startOnLoad: true,
-                theme: 'default',
-                securityLevel: 'loose',
-                flowchart: {
-                    useMaxWidth: false,
-                    htmlLabels: true
-                },
-                timeline: {
-                    useMaxWidth: false,
-                    // Customize timeline colors to match site theme
-                    noteMargin: 10,
-                    width: '100%',
-                    height: 'auto'
-                }
-            });
+            // Get all tab buttons and content
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
             
-            // Timeline navigation
-            const timelineButtons = document.querySelectorAll('.timeline-btn');
-            
-            if (timelineButtons.length > 0) {
-                // Add click event to timeline buttons
-                timelineButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Remove active class from all buttons
-                        timelineButtons.forEach(btn => btn.classList.remove('active'));
-                        
-                        // Add active class to clicked button
-                        this.classList.add('active');
-                        
-                        // Hide all timeline containers
-                        document.querySelectorAll('.timeline-container-wrapper').forEach(container => {
-                            container.style.display = 'none';
-                        });
-                        
-                        // Show selected timeline container
-                        const timelineId = this.getAttribute('data-timeline');
-                        document.getElementById(timelineId).style.display = 'block';
-                    });
+            // Add click event to tab buttons
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get the tab id from the button's data attribute
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to current button and content
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
                 });
-            }
+            });
         });
     </script>
 </body>
